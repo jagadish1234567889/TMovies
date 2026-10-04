@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TMovies</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#080808;
+  color:white;
+}
+
+header{
+  background:#111;
+  padding:16px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo{
+  color:#e50914;
+  font-size:28px;
+  font-weight:bold;
+}
+
+.search{
+  width:220px;
+  padding:11px 15px;
+  border-radius:25px;
+  border:1px solid #333;
+  background:#222;
+  color:white;
+  outline:none;
+}
+
+.hero{
+  padding:50px 5%;
+  background:linear-gradient(90deg,#111,#191919);
+}
+
+.hero h1{
+  font-size:36px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#aaa;
+}
+
+.container{
+  padding:30px 5%;
+}
+
+.section-title{
+  margin-bottom:20px;
+}
+
+.movies{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.card{
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.card img{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+  display:block;
+}
+
+.info{
+  padding:15px;
+}
+
+.info h3{
+  margin-bottom:8px;
+}
+
+.rating{
+  color:#ffd700;
+  margin-bottom:8px;
+}
+
+.genre{
+  color:#999;
+  font-size:14px;
+  margin-bottom:14px;
+}
+
+button{
+  width:100%;
+  padding:11px;
+  border:0;
+  border-radius:7px;
+  background:#e50914;
+  color:white;
+  font-weight:bold;
+}
+
+#popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  align-items:center;
+  justify-content:center;
+}
+
+.popup-box{
+  background:#181818;
+  width:90%;
+  max-width:400px;
+  padding:25px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.popup-box p{
+  color:#aaa;
+  margin:15px 0;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#777;
+}
+
+@media(max-width:700px){
+  .movies{
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+
+  .card img{
+    height:240px;
+  }
+
+  .search{
+    width:150px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">TMovies</div>
+
+<input
+class="search"
+id="search"
+placeholder="Search movies..."
+>
+
+</header>
+
+<section class="hero">
+
+<h1>Welcome to TMovies</h1>
+
+<p>Discover your favourite movies.</p>
+
+</section>
+
+<div class="container">
+
+<h2 class="section-title">Latest Movies</h2>
+
+<div class="movies">
+
+<div class="card">
+
+<img src="images/movie1.png">
+
+<div class="info">
+
+<h3>Tara Tarini</h3>
+
+<div class="rating">★ 8.5/10</div>
+
+<div class="genre">Drama • Adventure</div>
+
+<button onclick="details('Tara Tarini','8.5/10')">
+Details
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="images/movie2.png">
+
+<div class="info">
+
+<h3>Tomka</h3>
+
+<div class="rating">★ 8.2/10</div>
+
+<div class="genre">Action • Drama</div>
+
+<button onclick="details('Tomka','8.2/10')">
+Details
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="images/movie3.png">
+
+<div class="info">
+
+<h3>Jagadish</h3>
+
+<div class="rating">★ 8.7/10</div>
+
+<div class="genre">Action • Thriller</div>
+
+<button onclick="details('Jagadish','8.7/10')">
+Details
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="popup">
+
+<div class="popup-box">
+
+<h2 id="popupTitle"></h2>
+
+<p id="popupInfo"></p>
+
+<button onclick="closePopup()">
+Close
+</button>
+
+</div>
+
+</div>
+
+
+<footer>
+
+© 2026 TMovies
+
+</footer>
+
+
+<script>
+
+function details(movie,rating){
+
+document.getElementById("popupTitle").textContent=movie;
+
+document.getElementById("popupInfo").textContent=
