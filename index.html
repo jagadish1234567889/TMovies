@@ -6,9 +6,11 @@
   <meta name="google-site-verification" content="1lwrd95gWzZbYhFcKMypbYYxTk8JIxKFCG16uV43CK8" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="TMovies - A simple movie catalog website">
 
-  <title>TMovies</title>
+  <meta name="description"
+    content="TMovies - Movie reviews, ratings, cast, genres and movie details">
+
+  <title>TMovies - Movie Reviews</title>
 
   <style>
     * {
@@ -142,10 +144,82 @@
       margin-top: 30px;
     }
 
+    .footer-links {
+      margin-top: 15px;
+    }
+
+    .footer-links a {
+      color: #aaa;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .footer-links a:hover {
+      color: #ff1744;
+    }
+
     .no-result {
       display: none;
       color: #aaa;
       padding: 20px 0;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,.85);
+      padding: 30px 15px;
+      overflow-y: auto;
+    }
+
+    .modal-box {
+      max-width: 700px;
+      margin: 30px auto;
+      background: #15151c;
+      border-radius: 18px;
+      padding: 25px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      right: 18px;
+      top: 12px;
+      font-size: 30px;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: white;
+    }
+
+    .modal-box h2 {
+      color: #ff1744;
+      margin-bottom: 15px;
+    }
+
+    .modal-rating {
+      color: #ffd54f;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .modal-box p {
+      color: #ccc;
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .review-title {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      color: white;
     }
 
     @media (max-width: 800px) {
@@ -195,96 +269,283 @@
 
 <section class="hero">
   <h1>Welcome to TMovies</h1>
-  <p>Discover movies and explore your favorite titles.</p>
+  <p>Movie Reviews • Ratings • Details</p>
 </section>
 
 <section class="section">
+
   <h2>Latest Releases</h2>
 
   <div class="movies" id="movies">
 
+    <!-- Tara Tarini -->
+
     <div class="card" data-title="Tara Tarini">
+
       <img src="images/movie1.png" alt="Tara Tarini">
+
       <div class="content">
+
         <h3>Tara Tarini</h3>
+
         <div class="rating">★ 8.5/10</div>
-        <div class="genre">Drama • Adventure</div>
-        <button onclick="showDetails('Tara Tarini', '8.5/10')">
-          Details
+
+        <div class="genre">
+          Drama • Adventure
+        </div>
+
+        <button onclick="showDetails(
+          'Tara Tarini',
+          '8.5/10',
+          'Drama • Adventure',
+          'Tara Tarini is an emotional adventure story with strong characters and an engaging storyline.'
+        )">
+          Read Review
         </button>
+
       </div>
     </div>
+
+
+    <!-- Tomka -->
 
     <div class="card" data-title="Tomka">
+
       <img src="images/movie2.png" alt="Tomka">
+
       <div class="content">
+
         <h3>Tomka</h3>
+
         <div class="rating">★ 8.2/10</div>
-        <div class="genre">Action • Drama</div>
-        <button onclick="showDetails('Tomka', '8.2/10')">
-          Details
+
+        <div class="genre">
+          Action • Drama
+        </div>
+
+        <button onclick="showDetails(
+          'Tomka',
+          '8.2/10',
+          'Action • Drama',
+          'Tomka is an action drama featuring emotional moments, powerful scenes and an interesting story.'
+        )">
+          Read Review
         </button>
+
       </div>
     </div>
 
+
+    <!-- Jagadish -->
+
     <div class="card" data-title="Jagadish">
+
       <img src="images/movie3.png" alt="Jagadish">
+
       <div class="content">
+
         <h3>Jagadish</h3>
+
         <div class="rating">★ 8.7/10</div>
-        <div class="genre">Action • Thriller</div>
-        <button onclick="showDetails('Jagadish', '8.7/10')">
-          Details
+
+        <div class="genre">
+          Action • Thriller
+        </div>
+
+        <button onclick="showDetails(
+          'Jagadish',
+          '8.7/10',
+          'Action • Thriller',
+          'Jagadish is an action thriller with suspense, dramatic moments and an entertaining storyline.'
+        )">
+          Read Review
         </button>
+
+      </div>
+    </div>
+
+
+    <!-- Drishyam: The Conclusion -->
+
+    <div class="card" data-title="Drishyam: The Conclusion">
+
+      <img
+        src="images/drishyam-conclusion.webp"
+        alt="Drishyam: The Conclusion">
+
+      <div class="content">
+
+        <h3>Drishyam: The Conclusion</h3>
+
+        <div class="rating">★ 4.0/5</div>
+
+        <div class="genre">
+          Crime • Mystery • Thriller
+        </div>
+
+        <button onclick="window.location.href='movies/drishyam-conclusion.html'">
+          Read Review
+        </button>
+
       </div>
     </div>
 
   </div>
+
 
   <div class="no-result" id="noResult">
     No movie found.
   </div>
+
 </section>
 
+
+<!-- MOVIE DETAILS MODAL -->
+
+<div class="modal" id="movieModal">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeDetails()">×</span>
+
+    <h2 id="movieTitle"></h2>
+
+    <div class="modal-rating" id="movieRating"></div>
+
+    <p id="movieGenre"></p>
+
+    <h3 class="review-title">
+      Movie Review
+    </h3>
+
+    <p id="movieReview"></p>
+
+    <h3 class="review-title">
+      TMovies Rating
+    </h3>
+
+    <p>
+      ⭐ Recommended for movie lovers.
+    </p>
+
+  </div>
+
+</div>
+
+
 <footer>
+
   © 2026 TMovies. All rights reserved.
 
-<div class="footer-links">
-  <a href="pages/about.html">About</a>
-  <a href="pages/contact.html">Contact</a>
-  <a href="pages/privacy.html">Privacy Policy</a>
-  <a href="pages/disclaimer.html">Disclaimer</a>
-</div></footer>
+  <div class="footer-links">
+
+    <a href="pages/about.html">
+      About
+    </a>
+
+    <a href="pages/contact.html">
+      Contact
+    </a>
+
+    <a href="pages/privacy.html">
+      Privacy Policy
+    </a>
+
+    <a href="pages/disclaimer.html">
+      Disclaimer
+    </a>
+
+  </div>
+
+</footer>
+
 
 <script>
+
   const search = document.getElementById("search");
+
   const cards = document.querySelectorAll(".card");
+
   const noResult = document.getElementById("noResult");
 
+
   search.addEventListener("input", function () {
+
     const query = this.value.toLowerCase();
+
     let found = 0;
 
     cards.forEach(card => {
-      const title = card.dataset.title.toLowerCase();
+
+      const title =
+        card.dataset.title.toLowerCase();
 
       if (title.includes(query)) {
+
         card.style.display = "block";
+
         found++;
+
       } else {
+
         card.style.display = "none";
+
       }
+
     });
 
-    noResult.style.display = found === 0 ? "block" : "none";
+    noResult.style.display =
+      found === 0 ? "block" : "none";
+
   });
 
-  function showDetails(title, rating) {
-    alert(
-      "Movie: " + title +
-      "\nRating: " + rating
-    );
+
+  function showDetails(
+    title,
+    rating,
+    genre,
+    review
+  ) {
+
+    document.getElementById("movieTitle").textContent =
+      title;
+
+    document.getElementById("movieRating").textContent =
+      "★ " + rating;
+
+    document.getElementById("movieGenre").textContent =
+      "Genre: " + genre;
+
+    document.getElementById("movieReview").textContent =
+      review;
+
+    document.getElementById("movieModal").style.display =
+      "block";
+
   }
+
+
+  function closeDetails() {
+
+    document.getElementById("movieModal").style.display =
+      "none";
+
+  }
+
+
+  window.onclick = function(event) {
+
+    const modal =
+      document.getElementById("movieModal");
+
+    if (event.target === modal) {
+
+      modal.style.display = "none";
+
+    }
+
+  };
+
 </script>
 
 </body>
